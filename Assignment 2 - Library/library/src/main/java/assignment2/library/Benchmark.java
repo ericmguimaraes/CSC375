@@ -11,7 +11,7 @@ public class Benchmark {
 	
 	@GenerateMicroBenchmark
 	public void noJDKServer(){
-		NoJDKLibrary noJDKGameServer = new NoJDKLibrary();
+		LockFreeLibrary noJDKGameServer = new LockFreeLibrary();
 	}
 	
 }

@@ -8,10 +8,10 @@ public class SynchronizedLibrary extends Library {
 	public void rentOrReturnBook(int position) {
 		synchronized (books) {
 			if (ThreadLocalRandom.current().nextInt() % 2 == 0) {
-				books[position] += 1;
+				books[position].set(books[position].get() + 1);
 			} else {
-				if (books[position] != 0)
-					books[position] -= 1;
+				if (books[position].get() != 0)
+					books[position].set(books[position].get() - 1);
 			}
 		}
 	}
@@ -19,7 +19,7 @@ public class SynchronizedLibrary extends Library {
 	@Override
 	public int lookBook(int position) {
 		synchronized (books) {
-			return books[position];
+			return books[position].get();
 		}
 	}
 

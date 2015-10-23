@@ -4,7 +4,7 @@ public class Controller {
 
 	static SynchronizedLibrary syncronizedGameServer;
 
-	static NoJDKLibrary noJDKGameServer;
+	static LockFreeLibrary noJDKGameServer;
 
 	public static void main(String args[]) {
 		//Main.main(args);
