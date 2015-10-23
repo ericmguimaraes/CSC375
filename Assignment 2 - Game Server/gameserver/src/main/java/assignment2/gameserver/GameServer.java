@@ -1,3 +1,4 @@
+package assignment2.gameserver;
 public abstract class GameServer {
 
 	public static final int NUMBER_OF_PLAYERS = 20;

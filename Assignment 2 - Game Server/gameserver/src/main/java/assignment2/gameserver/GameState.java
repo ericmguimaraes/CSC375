@@ -1,3 +1,4 @@
+package assignment2.gameserver;
 import java.util.concurrent.ThreadLocalRandom;
 
 public enum GameState {

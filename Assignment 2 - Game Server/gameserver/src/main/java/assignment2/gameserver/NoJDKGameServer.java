@@ -1,3 +1,4 @@
+package assignment2.gameserver;
 
 public class NoJDKGameServer extends GameServer {
 
