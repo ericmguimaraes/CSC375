@@ -1,8 +1,12 @@
-package assignment2.library;
+package com.eguimaraes;
 
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.openjdk.jmh.annotations.Scope;
+import org.openjdk.jmh.annotations.State;
+
+@State(Scope.Benchmark)
 public abstract class Library {
 
 	public static final int NUMBER_OF_READERS = 20;
@@ -16,7 +20,7 @@ public abstract class Library {
 		readers = new Reader[NUMBER_OF_READERS];
 		books = new AtomicInteger[NUMBER_OF_BOOKS];
 		for (int i = 0; i < NUMBER_OF_READERS; i++) {
-			readers[i] = new Reader(i, this);
+			readers[i] = new Reader(this);
 		}
 		for (int i = 0; i < NUMBER_OF_BOOKS; i++) {
 			books[i] = new AtomicInteger(ThreadLocalRandom.current().nextInt(4));

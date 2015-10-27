@@ -1,4 +1,4 @@
-package assignment2.library;
+package com.eguimaraes;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -16,7 +16,7 @@ public class SynchronizedLibrary extends Library {
 		}
 	}
 
-	@Override
+	@Override	
 	public int lookBook(int position) {
 		synchronized (books) {
 			return books[position].get();
