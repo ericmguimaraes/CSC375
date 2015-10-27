@@ -5,7 +5,7 @@ import org.openjdk.jmh.Main;
 public class RunTest {
  
     public static void main(String[] args) throws Exception {
-        Main.main(getArguments("MyBenchmark", 10, 5, 100));
+        Main.main(getArguments("MyBenchmark", 10, 5, 30));
     }
  
     private static String[] getArguments(String className, int nRuns, int runForMilliseconds, int nThreads) {
