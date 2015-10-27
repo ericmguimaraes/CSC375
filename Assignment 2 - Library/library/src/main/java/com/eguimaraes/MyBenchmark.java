@@ -12,7 +12,7 @@ import org.openjdk.jmh.annotations.State;
 public class MyBenchmark {
 
 	public static final int NUMBER_OF_BOOKS = 40;
-	public static final int NUMBER_OF_ITERACTIONS = 200;
+	public static final int NUMBER_OF_ITERACTIONS = 300;
 	public static final int PERCENTAGE_OF_READ = 75;
 	AtomicInteger[] books;
 
@@ -68,9 +68,9 @@ public class MyBenchmark {
 		while (i < NUMBER_OF_ITERACTIONS) {
 			int random = ThreadLocalRandom.current().nextInt(100);
 			if (random > PERCENTAGE_OF_READ) {
-				synchronizedRentOrReturnBook(ThreadLocalRandom.current().nextInt(Library.NUMBER_OF_BOOKS));
+				synchronizedRentOrReturnBook(ThreadLocalRandom.current().nextInt(NUMBER_OF_BOOKS));
 			} else {
-				synchronizedLookBook(ThreadLocalRandom.current().nextInt(Library.NUMBER_OF_BOOKS));
+				synchronizedLookBook(ThreadLocalRandom.current().nextInt(NUMBER_OF_BOOKS));
 			}
 			i++;
 		}
@@ -82,9 +82,9 @@ public class MyBenchmark {
 		while (i < NUMBER_OF_ITERACTIONS) {
 			int random = ThreadLocalRandom.current().nextInt(100);
 			if (random > PERCENTAGE_OF_READ) {
-				lockFreeRentOrReturnBook(ThreadLocalRandom.current().nextInt(Library.NUMBER_OF_BOOKS));
+				lockFreeRentOrReturnBook(ThreadLocalRandom.current().nextInt(NUMBER_OF_BOOKS));
 			} else {
-				lockFreeLookBook(ThreadLocalRandom.current().nextInt(Library.NUMBER_OF_BOOKS));
+				lockFreeLookBook(ThreadLocalRandom.current().nextInt(NUMBER_OF_BOOKS));
 			}
 			i++;
 		}
