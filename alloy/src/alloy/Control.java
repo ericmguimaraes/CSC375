@@ -33,12 +33,12 @@ public class Control {
                     String[] newargs = new String[8];
                     newargs[0] = "999999999";
                     newargs[1] = "-999999999";
-                    newargs[2] = "0.90";
-                    newargs[3] = "1.2";
+                    newargs[2] = "1.2";
+                    newargs[3] = "1.0";
                     newargs[4] = "0.75";
-                    newargs[5] = "300";
-                    newargs[6] = "300";
-                    newargs[7] = "500";
+                    newargs[5] = "600";
+                    newargs[6] = "600";
+                    newargs[7] = "1000";
                     for (int i = 0; i < newargs.length; i++) {
                         String newarg = newargs[i];
                         System.out.print(newarg+", ");
@@ -63,9 +63,17 @@ public class Control {
 
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException ex) {
+		} catch (UnsupportedLookAndFeelException ex) {
 			ex.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		JFrame frame = new JFrame("Alloy");
