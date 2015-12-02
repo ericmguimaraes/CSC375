@@ -28,8 +28,8 @@ public class Atom implements Cloneable {
 
 	private void initMetals() {
 		metals = new float[3];
-		metals[0] = randomInRange((float) 0.4,(float) 0.5);
-		metals[1] = randomInRange((float) 0.3,(float) 0.4);
+		metals[0] = randomInRange((float) 0.45,(float) 0.60);
+		metals[1] = randomInRange((float) 0.10,(float) 0.40);
 		metals[2] = 1 - metals[1] - metals[0];
 	}
 

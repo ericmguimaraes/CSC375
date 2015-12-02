@@ -20,7 +20,7 @@ public class Alloy {
 		private void init() {
 			for (int i = 0; i < w; i++) {
 				for (int j = 0; j < h; j++) {
-					atom[i][j] = new Atom(0);
+					atom[i][j] = new Atom(Control.INITIAL_TEMPERATURE);
 				}
 			}
 			atom[0][0] = new Atom(s);
@@ -123,7 +123,7 @@ public class Alloy {
 	public void print(){
 		for (int i = 0; i < w; i++) {
 			for (int j = 0; j < h; j++) {
-				System.out.print(" : "+getOrigin(i, j).getTemperature()+" : "); 
+				System.out.print(" : "+getOrigin(i, j).getTemperature()+":"+getOrigin(i, j).tag+" : "); 
 			}
 			System.out.println("");
 		}

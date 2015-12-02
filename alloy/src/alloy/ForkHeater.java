@@ -1,6 +1,7 @@
 package alloy;
 
 import java.util.concurrent.RecursiveAction;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class ForkHeater extends RecursiveAction {
 
@@ -59,63 +60,71 @@ public class ForkHeater extends RecursiveAction {
 	private void update(int xGoal, int yGoal) {
 		double temp = 0;
 		for (int i = 0; i < 3; i++) {
-			temp = adddoubleSafe(temp, (double) alloy.constants[i] * updateAUX(xGoal, yGoal, i));
+			temp += alloy.constants[i] * sumOfTempMultByMetalPercentageInEachNeighbor(xGoal, yGoal, i);
 		}
-		alloy.getDestination(xGoal, yGoal).setTemperature(temp / countNeighbors(xGoal, yGoal));
+		temp = temp / countNeighbors(xGoal, yGoal);
+		if (Double.isNaN(temp)) {
+			int r = ThreadLocalRandom.current().nextInt();
+			if (r % 2 == 0)
+				temp = Double.MAX_VALUE;
+			else
+				temp = -Double.MAX_VALUE;
+		} else if (Double.isInfinite(temp)) {
+			if (temp == Double.NEGATIVE_INFINITY) {
+				temp = -Double.MAX_VALUE;
+			} else {
+				temp = Double.MAX_VALUE;
+			}
+		}
+
+		alloy.getDestination(xGoal, yGoal).setTemperature(temp);
 	}
 
-	private double updateAUX(int xGoal, int yGoal, int c) {
+	private double sumOfTempMultByMetalPercentageInEachNeighbor(int xGoal, int yGoal, int c) {
 		double t = 0;
 		try {
-			t = adddoubleSafe(t, getNeighborValue(xGoal, yGoal, -1, -1, c));
+			t += neighborTempMultByMetalC(xGoal, yGoal, -1, -1, c);
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
-			t = adddoubleSafe(t, getNeighborValue(xGoal, yGoal, -1, 0, c));
+			t += neighborTempMultByMetalC(xGoal, yGoal, -1, 0, c);
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
-			t = adddoubleSafe(t, getNeighborValue(xGoal, yGoal, -1, 1, c));
+			double aux = neighborTempMultByMetalC(xGoal, yGoal, -1, 1, c);
+			t += aux;
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
-			t = adddoubleSafe(t, getNeighborValue(xGoal, yGoal, 0, 1, c));
+			t += neighborTempMultByMetalC(xGoal, yGoal, 0, 1, c);
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
-			t = adddoubleSafe(t, getNeighborValue(xGoal, yGoal, 1, 1, c));
+			t += neighborTempMultByMetalC(xGoal, yGoal, 1, 1, c);
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
-			t = adddoubleSafe(t, getNeighborValue(xGoal, yGoal, 1, 0, c));
+			t += neighborTempMultByMetalC(xGoal, yGoal, 1, 0, c);
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
-			t = adddoubleSafe(t, getNeighborValue(xGoal, yGoal, 1, -1, c));
+			t += neighborTempMultByMetalC(xGoal, yGoal, 1, -1, c);
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
-			t = adddoubleSafe(t, getNeighborValue(xGoal, yGoal, 0, -1, c));
+			t += neighborTempMultByMetalC(xGoal, yGoal, 0, -1, c);
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		return t;
 	}
 
-	private double getNeighborValue(int xGoal, int yGoal, int xVariation, int yVariation, int i) {
+	private double neighborTempMultByMetalC(int xGoal, int yGoal, int xVariation, int yVariation, int i) {
 		int x = xGoal + xVariation;
 		int y = yGoal + yVariation;
 		double temp = alloy.getOrigin(x, y).getTemperature();
 		float metal = alloy.getOrigin(x, y).metals[i];
 		float res = (float) (temp * metal);
 		return (double) (res);
-	}
-
-	public double mutiplydoubleSafe(double l1, double l2) {
-		return l1 * l2;
-	}
-
-	public double adddoubleSafe(double l1, double l2) {
-		return l1 + l2;
 	}
 
 	private int countNeighbors(int xGoal, int yGoal) {

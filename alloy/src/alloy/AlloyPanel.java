@@ -23,6 +23,7 @@ public class AlloyPanel extends JPanel {
 		COLS = alloy.h;
 		ROWS = alloy.w;
 		BOX_SIZE = 600/COLS;
+                if(BOX_SIZE==0) BOX_SIZE=1;
 	}
 
 	@Override
@@ -47,19 +48,35 @@ public class AlloyPanel extends JPanel {
 //				int R= (int) (255/(double.MAX_VALUE-double.MIN_VALUE)*alloy.getOrigin(row, col).getTemperature()+double.MAX_VALUE-255/(double.MAX_VALUE-double.MIN_VALUE));
 //				int G= 0;
 //				int B=(int) (-255/(double.MAX_VALUE-double.MIN_VALUE)*alloy.getOrigin(row, col).getTemperature()+double.MIN_VALUE+255/(double.MAX_VALUE-double.MIN_VALUE)*255);
-				double temp = alloy.getOrigin(row, col).getTemperature(); 
-				if(temp<-50){
+				double temp = alloy.getOrigin(row, col).getTemperature();
+				if(temp==0){ //zero
+					R=220;
+					G=220;
+					B=220;
+				}else if(temp<-0.01){ //blue
 					R=50;
 					G=50;
 					B=255;
-				} else if (temp>50) {
+				}else if (temp>0.01) { //red
 					R=255;
 					G=50;
 					B=50;
-				} else {
+				} else if(temp<-0.00000000000000000000001){ //light blue
+					R=150;
+					G=150;
+					B=255;
+				}else if (temp>0.00000000000000000000001) { //light red
 					R=255;
-					G=255;
-					B=50;
+					G=215;
+					B=30;
+				} else if(temp<0){ //lighter blue
+					R=200;
+					G=200;
+					B=255;
+				}else{ //lighter red
+					R=255;
+					G=240;
+					B=130;
 				}
 				//g2d.setColor(new Color(R>255?255:(R<0?0:R),G,B>255?255:(B<0?0:B)));
 				g2d.setColor(new Color(R,G,B));

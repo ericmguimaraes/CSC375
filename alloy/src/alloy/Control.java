@@ -18,15 +18,35 @@ public class Control {
 
 	static float c1, c2, c3;
 
-	static final int LIMIT_ITERACTIONS = 1000;
+	static final int LIMIT_ITERACTIONS = 9000;
 
 	static int iteractions = 0;
 
 	static AlloyPanel panel;
+	
+	public static double INITIAL_TEMPERATURE = 0;
 
 	public static void main(String[] args) throws InterruptedException {
-		if (args.length != 8)
-			throw new IllegalArgumentException("Args Required: S, T, C_1, C_2, C_3, width, height, threshold");
+		if (args.length != 8){
+                    System.out.println("Args Required: S, T, C_1, C_2, C_3, width, height, threshold");
+                    System.out.println("Using default args");
+                    String[] newargs = new String[8];
+                    newargs[0] = "999999999";
+                    newargs[1] = "-999999999";
+                    newargs[2] = "0.90";
+                    newargs[3] = "1.2";
+                    newargs[4] = "0.75";
+                    newargs[5] = "300";
+                    newargs[6] = "300";
+                    newargs[7] = "500";
+                    for (int i = 0; i < newargs.length; i++) {
+                        String newarg = newargs[i];
+                        System.out.print(newarg+", ");
+                    }
+                    System.out.println("");
+                    args = newargs;              
+                }
+		if(args.length>8) INITIAL_TEMPERATURE = Double.parseDouble(args[8]);
 
 		s = Integer.parseInt(args[0]);
 		t = Integer.parseInt(args[1]);
@@ -55,18 +75,20 @@ public class Control {
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-
+		//alloy.print();
 		pool.invoke(heater);
-		alloy.print();
+//		System.out.println(alloy.getDestination(1,0).metals[0]);
+//		System.out.println(alloy.getDestination(1,0).metals[1]);
+//		System.out.println(alloy.getDestination(1,0).metals[2]);
 		while (!alloy.converged() && iteractions < LIMIT_ITERACTIONS) {
 			iteractions++;
 			alloy.flipIndex();
 			heater = new ForkHeater(alloy, threshold);
 			pool.invoke(heater);
-			alloy.print();
+			//alloy.print();
 			panel.repaint();
 		}
-
+//        alloy.print();
 		System.out.println("iteractions: " + iteractions);
 
 	}
