@@ -1,5 +1,7 @@
 package alloy;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Alloy {
 
 	public class Matrix implements Cloneable {
@@ -20,7 +22,11 @@ public class Alloy {
 		private void init() {
 			for (int i = 0; i < w; i++) {
 				for (int j = 0; j < h; j++) {
-					atom[i][j] = new Atom(Control.INITIAL_TEMPERATURE);
+					Double r = randomInRange(0.000000000000000000000000000001,0.000000000000000000000001);
+					if(ThreadLocalRandom.current().nextBoolean())
+						r=-r;
+					atom[i][j] = new Atom(r);
+					//atom[i][j] = new Atom(Control.INITIAL_TEMPERATURE);
 				}
 			}
 			atom[0][0] = new Atom(s);
@@ -141,6 +147,13 @@ public class Alloy {
 			}
 		}
 		return true;
+	}
+	
+	public double randomInRange(double min, double max) {
+		double range = max - min;
+		double scaled = ThreadLocalRandom.current().nextDouble() * range;
+		double shifted = scaled + min;
+		return shifted;
 	}
 
 }
