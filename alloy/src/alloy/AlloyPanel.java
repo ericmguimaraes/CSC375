@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -14,7 +12,7 @@ public class AlloyPanel extends JPanel {
 	/**
 	* 
 	*/
-	private static final long serialVersionUID = 1721759234264275847L;
+	private static final double serialVersionUID = 1721759234264275847L;
 	protected int ROWS;
 	protected int COLS;
 	protected int BOX_SIZE = 30;
@@ -42,14 +40,14 @@ public class AlloyPanel extends JPanel {
 		
 		for (int row = 0; row < ROWS; row++) {
 			for (int col = 0; col < COLS; col++) {
-				int R=0;// = (int) (255/(Long.MAX_VALUE-Long.MIN_VALUE)*alloy.getOrigin(row, col).getTemperature()+Long.MAX_VALUE-255/(Long.MAX_VALUE-Long.MIN_VALUE));
+				int R=0;// = (int) (255/(double.MAX_VALUE-double.MIN_VALUE)*alloy.getOrigin(row, col).getTemperature()+double.MAX_VALUE-255/(double.MAX_VALUE-double.MIN_VALUE));
 				int G=0;// = 0;
-				int B=0;// = (int) (-255/(Long.MAX_VALUE-Long.MIN_VALUE)*alloy.getOrigin(row, col).getTemperature()+Long.MIN_VALUE+255/(Long.MAX_VALUE-Long.MIN_VALUE)*255);
+				int B=0;// = (int) (-255/(double.MAX_VALUE-double.MIN_VALUE)*alloy.getOrigin(row, col).getTemperature()+double.MIN_VALUE+255/(double.MAX_VALUE-double.MIN_VALUE)*255);
 				
-//				int R= (int) (255/(Long.MAX_VALUE-Long.MIN_VALUE)*alloy.getOrigin(row, col).getTemperature()+Long.MAX_VALUE-255/(Long.MAX_VALUE-Long.MIN_VALUE));
+//				int R= (int) (255/(double.MAX_VALUE-double.MIN_VALUE)*alloy.getOrigin(row, col).getTemperature()+double.MAX_VALUE-255/(double.MAX_VALUE-double.MIN_VALUE));
 //				int G= 0;
-//				int B=(int) (-255/(Long.MAX_VALUE-Long.MIN_VALUE)*alloy.getOrigin(row, col).getTemperature()+Long.MIN_VALUE+255/(Long.MAX_VALUE-Long.MIN_VALUE)*255);
-				long temp = alloy.getOrigin(row, col).getTemperature(); 
+//				int B=(int) (-255/(double.MAX_VALUE-double.MIN_VALUE)*alloy.getOrigin(row, col).getTemperature()+double.MIN_VALUE+255/(double.MAX_VALUE-double.MIN_VALUE)*255);
+				double temp = alloy.getOrigin(row, col).getTemperature(); 
 				if(temp<-50){
 					R=50;
 					G=50;

@@ -2,11 +2,9 @@ package alloy;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import alloy.Alloy.Matrix;
-
 public class Atom implements Cloneable {
 
-	private long temperature;
+	private double temperature;
 	public boolean tag;
 	float metals[];
 
@@ -16,13 +14,13 @@ public class Atom implements Cloneable {
 		initMetals();
 	}
 
-	public Atom(long temp) {
+	public Atom(double temp) {
 		tag = false;
 		temperature = temp;
 		initMetals();
 	}
 
-	public Atom(long temperature, float metals[]) {
+	public Atom(double temperature, float metals[]) {
 		tag = false;
 		this.metals = metals;
 		this.temperature = temperature;
@@ -30,8 +28,8 @@ public class Atom implements Cloneable {
 
 	private void initMetals() {
 		metals = new float[3];
-		metals[0] = randomInRange((float) 0.45,(float) 0.5);
-		metals[1] = randomInRange((float) 0.35,(float) 0.4);
+		metals[0] = randomInRange((float) 0.4,(float) 0.5);
+		metals[1] = randomInRange((float) 0.3,(float) 0.4);
 		metals[2] = 1 - metals[1] - metals[0];
 	}
 
@@ -42,11 +40,11 @@ public class Atom implements Cloneable {
 		return shifted;
 	}
 
-	public long getTemperature() {
+	public double getTemperature() {
 		return temperature;
 	}
 
-	public void setTemperature(long temperature) {
+	public void setTemperature(double temperature) {
 		this.temperature = temperature;
 	}
 

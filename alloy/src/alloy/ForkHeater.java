@@ -7,7 +7,7 @@ public class ForkHeater extends RecursiveAction {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -990299664702406792L;
+	private static final double serialVersionUID = -990299664702406792L;
 	Alloy alloy;
 	int start;
 	int length;
@@ -49,7 +49,7 @@ public class ForkHeater extends RecursiveAction {
 			if (alloy.getOrigin(x, y).tag)
 				throw new RuntimeException("Tried to modify already processed atom");
 			else {
-				if (!(x == 0 && y == 0) && !(x == alloy.w - 1 && y == alloy.h - 1))
+				if ((x != 0 || y != 0) && (x != alloy.w - 1 || y != alloy.h - 1))
 					update(x, y);
 				alloy.getOrigin(x, y).tag = true;
 			}
@@ -57,92 +57,65 @@ public class ForkHeater extends RecursiveAction {
 	}
 
 	private void update(int xGoal, int yGoal) {
-		long temp = 0;
+		double temp = 0;
 		for (int i = 0; i < 3; i++) {
-			temp = addLongSafe(temp, (long) alloy.constants[i] * updateAUX(xGoal, yGoal, i));
+			temp = adddoubleSafe(temp, (double) alloy.constants[i] * updateAUX(xGoal, yGoal, i));
 		}
 		alloy.getDestination(xGoal, yGoal).setTemperature(temp / countNeighbors(xGoal, yGoal));
 	}
 
-	private long updateAUX(int xGoal, int yGoal, int c) {
-		long t = 0, temp = 0;
-		int count = 0;
+	private double updateAUX(int xGoal, int yGoal, int c) {
+		double t = 0;
 		try {
-			t = addLongSafe(t, getNeighborValue(xGoal, yGoal, -1, -1, c));
-			count++;
+			t = adddoubleSafe(t, getNeighborValue(xGoal, yGoal, -1, -1, c));
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
-			t = addLongSafe(t, getNeighborValue(xGoal, yGoal, -1, 0, c));
-			count++;
+			t = adddoubleSafe(t, getNeighborValue(xGoal, yGoal, -1, 0, c));
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
-			t = addLongSafe(t, getNeighborValue(xGoal, yGoal, -1, 1, c));
-			count++;
+			t = adddoubleSafe(t, getNeighborValue(xGoal, yGoal, -1, 1, c));
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
-			t = addLongSafe(t, getNeighborValue(xGoal, yGoal, 0, 1, c));
-			count++;
+			t = adddoubleSafe(t, getNeighborValue(xGoal, yGoal, 0, 1, c));
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
-			t = addLongSafe(t, getNeighborValue(xGoal, yGoal, 1, 1, c));
-			count++;
+			t = adddoubleSafe(t, getNeighborValue(xGoal, yGoal, 1, 1, c));
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
-			t = addLongSafe(t, getNeighborValue(xGoal, yGoal, 1, 0, c));
-			count++;
+			t = adddoubleSafe(t, getNeighborValue(xGoal, yGoal, 1, 0, c));
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
-			t = addLongSafe(t, getNeighborValue(xGoal, yGoal, 1, -1, c));
-			count++;
+			t = adddoubleSafe(t, getNeighborValue(xGoal, yGoal, 1, -1, c));
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		try {
-			t = addLongSafe(t, getNeighborValue(xGoal, yGoal, 0, -1, c));
-			count++;
+			t = adddoubleSafe(t, getNeighborValue(xGoal, yGoal, 0, -1, c));
 		} catch (ArrayIndexOutOfBoundsException e) {
 		}
 		return t;
 	}
 
-	private long getNeighborValue(int xGoal, int yGoal, int xVariation, int yVariation, int i) {
+	private double getNeighborValue(int xGoal, int yGoal, int xVariation, int yVariation, int i) {
 		int x = xGoal + xVariation;
 		int y = yGoal + yVariation;
-		long temp = alloy.getOrigin(x, y).getTemperature();
+		double temp = alloy.getOrigin(x, y).getTemperature();
 		float metal = alloy.getOrigin(x, y).metals[i];
-		float res = temp * metal;
-		return (long) (res);
+		float res = (float) (temp * metal);
+		return (double) (res);
 	}
 
-	public Long mutiplyLongSafe(long l1, long l2) {
-		try {
-			l1 = Math.multiplyExact(l1, l2);
-		} catch (ArithmeticException e) {
-			if (l1 > 0 && l2 > 0) {
-				l1 = Long.MAX_VALUE;
-			} else {
-				l1 = Long.MIN_VALUE;
-			}
-		}
-		return l1;
+	public double mutiplydoubleSafe(double l1, double l2) {
+		return l1 * l2;
 	}
 
-	public Long addLongSafe(long l1, long l2) {
-		try {
-			l1 = Math.addExact(l1, l2);
-		} catch (ArithmeticException e) {
-			if (l1 > 0 && l2 > 0) {
-				l1 = Long.MAX_VALUE;
-			} else {
-				l1 = Long.MIN_VALUE;
-			}
-		}
-		return l1;
+	public double adddoubleSafe(double l1, double l2) {
+		return l1 + l2;
 	}
 
 	private int countNeighbors(int xGoal, int yGoal) {
