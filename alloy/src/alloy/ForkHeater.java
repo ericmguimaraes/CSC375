@@ -49,7 +49,8 @@ public class ForkHeater extends RecursiveAction {
 			if (alloy.getOrigin(x, y).tag)
 				throw new RuntimeException("Tried to modify already processed atom");
 			else {
-				update(x, y);
+				if (!(x == 0 && y == 0) && !(x == alloy.w - 1 && y == alloy.h - 1))
+					update(x, y);
 				alloy.getOrigin(x, y).tag = true;
 			}
 		}
@@ -112,7 +113,10 @@ public class ForkHeater extends RecursiveAction {
 	private long getNeighborValue(int xGoal, int yGoal, int xVariation, int yVariation, int i) {
 		int x = xGoal + xVariation;
 		int y = yGoal + yVariation;
-		return alloy.getOrigin(x, y).getTemperature()*(alloy.getOrigin(x, y).metals[i]/100);
+		long temp = alloy.getOrigin(x, y).getTemperature();
+		float metal = alloy.getOrigin(x, y).metals[i];
+		float res = temp * metal;
+		return (long) (res);
 	}
 
 	public Long mutiplyLongSafe(long l1, long l2) {

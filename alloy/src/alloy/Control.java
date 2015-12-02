@@ -58,7 +58,7 @@ public class Control {
         frame.setVisible(true);
         long endTime = System.currentTimeMillis();
         
-        //Thread.sleep(10);
+        //Thread.sleep(100);
         pool.invoke(heater);
         //System.out.println(alloy.converged());
         //alloy.print();
@@ -69,7 +69,7 @@ public class Control {
         	//alloy.print();
         	alloy.flipIndex();
         	heater = new ForkHeater(alloy, threshold);
-        	//Thread.sleep(10);
+        	//Thread.sleep(100);
         	pool.invoke(heater);
         	panel.repaint();
         }
